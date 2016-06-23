@@ -81,4 +81,33 @@ class stringFactory
         return $sTimeDesc;
     }
 
+    /**
+     * 生成随机数
+     * @param $iLen int option 几位数
+     * @param $sFormat string option 数字还是字符，或者混合
+     * @return string
+     */
+    public static function randStr($iLen = 6, $sFormat = 'ALL')
+    {
+        switch ($sFormat) {
+            case 'ALL':
+                $sChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-@#~';
+                break;
+            case 'CHAR':
+                $sChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-@#~';
+                break;
+            case 'NUMBER':
+                $sChars = '0123456789';
+                break;
+            default :
+                $sChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-@#~';
+                break;
+        }
+        mt_srand((double) microtime() * 1000000 * getmypid());
+        $sPassword = "";
+        while (strlen($sPassword) < $iLen)
+            $sPassword.=substr($sChars, (mt_rand() % strlen($sChars)), 1);
+        return $sPassword;
+    }
+
 }
